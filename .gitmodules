@@ -1,0 +1,6 @@
+[submodule "portal-backend"]
+	path = portal-backend
+	url = https://github.com/hm-edu/portal-backend
+[submodule "portal-frontend"]
+	path = portal-frontend
+	url = https://github.com/hm-edu/portal-frontend

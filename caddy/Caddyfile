@@ -1,0 +1,15 @@
+{$NEXT_PUBLIC_EAB_HOST} {
+    reverse_proxy eab-rest-interface:8000
+}
+
+{$NEXT_PUBLIC_PKI_HOST} {
+    reverse_proxy pki-rest-interface:8000
+}
+
+{$NEXT_PUBLIC_DOMAIN_HOST} {
+    reverse_proxy domain-rest-interface:8000
+}
+
+{$NEXTAUTH_URL} {
+    reverse_proxy frontend:3000
+}

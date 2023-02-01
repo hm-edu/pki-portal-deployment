@@ -1,0 +1,182 @@
+version: "3"
+services:
+  postgresql:
+    image: postgres:15
+    container_name: postgres
+    restart: always
+    volumes:
+      - postgresql:/var/lib/postgresql/data
+      - ./db-init:/docker-entrypoint-initdb.d
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+    networks:
+      - portal-backend
+  pki-rest-interface:
+    build:
+      context: portal-backend
+      dockerfile: Dockerfile
+      args:
+        - SERVICE=pki-rest-interface
+    restart: always
+    depends_on:
+      - domain-rest-interface
+      - pki-service
+    networks:
+      - portal-frontend
+      - portal-backend
+    env_file:
+      - .env
+    command:
+      - --level
+      - "debug"
+      - --audience
+      - "$AUDIENCE"
+      - --jwks_uri
+      - "$JWKS_URI"
+      - --ssl_service
+      - "pki-service:8081"
+      - --smime_service
+      - "pki-service:8081"
+      - --domain_service
+      - "domain-rest-interface:8081"
+  pki-service:
+    build:
+      context: portal-backend
+      dockerfile: Dockerfile
+      args:
+        - SERVICE=pki-service
+    restart: always
+    depends_on:
+      - postgresql
+    networks:
+      - portal-backend
+    env_file:
+      - .env
+    command:     
+      - --level
+      - "debug"
+      - --sectigo_user
+      - "$SECTIGO_USER"
+      - --sectigo_customeruri
+      - "DFN"
+      - --sectigo_password
+      - "$SECTIGO_PASSWORD"
+      - --ssl_org_id
+      - "$SSL_ORG_ID"
+      - --ssl_term
+      - "365"
+      - --ssl_profile
+      - "15863"
+      - --smime_profile
+      - "16307"
+      - --smime_org_id
+      - "$SMIME_ORG_ID"
+      - --smime_term
+      - "1095"
+      - --smime_key_length
+      - "3072"
+      - --smime_key_type
+      - "RSA"
+      - --db
+      - "postgresql://pki:pki@postgres/certificates"
+  eab-rest-interface:
+    build:
+      context: portal-backend
+      dockerfile: Dockerfile
+      args:
+        - SERVICE=eab-rest-interface
+    restart: always
+    networks:
+      - portal-frontend
+      - portal-backend
+    depends_on:
+      - postgresql
+      - domain-rest-interface
+    env_file:
+      - .env
+    command:
+      - --level
+      - "debug"
+      - --audience
+      - "$AUDIENCE"
+      - --jwks_uri
+      - "$JWKS_URI"
+      - --db
+      - "postgresql://acme:acme@postgres/eab"
+      - --acme_db
+      - "postgresql://acme:acme@postgres/acme"
+      - --provisioner_id
+      - "acme/acme"
+      - --domain_service
+      - "domain-rest-interface:8081"
+  domain-rest-interface:
+    build:
+      context: portal-backend
+      dockerfile: Dockerfile
+      args:
+        - SERVICE=domain-rest-interface
+    restart: always
+    networks:
+      - portal-frontend
+      - portal-backend
+    depends_on:
+      - postgresql
+      - pki-service
+    env_file:
+      - .env
+    command:        
+      - --level
+      - "debug"
+      - --audience
+      - "$AUDIENCE"
+      - --jwks_uri
+      - "$JWKS_URI"
+      - --db
+      - "postgresql://pki:pki@postgres/domain"
+      - --ssl_service
+      - "pki-service:8081"
+      - --grpc-port
+      - "8081"
+  frontend:
+    build:
+      context: portal-frontend
+      dockerfile: Dockerfile
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - portal-frontend
+  caddy:
+    image: caddy
+    restart: always
+    networks:
+      - default 
+      - portal-frontend
+    env_file:
+      - .env
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  caddy_data:
+    external: true
+  postgresql:
+networks:
+  default:
+    name: default
+  portal-frontend:
+    name: portal-frontend
+  portal-backend:
+    name: portal-backend
