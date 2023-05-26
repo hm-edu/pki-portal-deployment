@@ -33,7 +33,7 @@ services:
       - .env
     command:
       - --level
-      - "debug"
+      - "info"
       - --audience
       - "$AUDIENCE"
       - --jwks_uri
@@ -59,7 +59,7 @@ services:
       - .env
     command:     
       - --level
-      - "debug"
+      - "info"
       - --sectigo_user
       - "$SECTIGO_USER"
       - --sectigo_customeruri
@@ -69,17 +69,19 @@ services:
       - --ssl_org_id
       - "$SSL_ORG_ID"
       - --ssl_term
-      - "365"
+      - "$SSL_TERM"
       - --ssl_profile
-      - "15863"
+      - "$SSL_PROFILE"
       - --smime_profile
-      - "16307"
+      - "$SMIME_PROFILE"
       - --smime_org_id
       - "$SMIME_ORG_ID"
       - --smime_term
-      - "1095"
+      - "$SMIME_TERM"
+      - --smime_student_term
+      - "$SMIME_STUDENT_TERM"
       - --smime_key_length
-      - "3072"
+      - "$SMIME_KEY_LENGTH"
       - --smime_key_type
       - "RSA"
       - --db
@@ -101,7 +103,7 @@ services:
       - .env
     command:
       - --level
-      - "debug"
+      - "info"
       - --audience
       - "$AUDIENCE"
       - --jwks_uri
@@ -131,7 +133,7 @@ services:
       - .env
     command:        
       - --level
-      - "debug"
+      - "info"
       - --audience
       - "$AUDIENCE"
       - --jwks_uri
@@ -170,6 +172,7 @@ services:
       - caddy_config:/config
 
 volumes:
+  caddy_config:
   caddy_data:
     external: true
   postgresql:

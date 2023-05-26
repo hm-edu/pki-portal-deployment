@@ -11,12 +11,21 @@ This repository provides the required tools for a local docker deployment of the
 
 ## Configuration
 
+Before building and starting the containers serveral environment variables should be configured. Therefor you should copy the `.env.example` file to `.env` and set the appropriate values.
+
 | Variable                | Description                                                                                          | Example Value                                               |
 | ----------------------- | ---------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
 | SECTIGO_USER            | Your Sectigo Username                                                                                | youruser                                                    |
 | SECTIGO_PASSWORD        | Your Sectigo Password                                                                                | yourpassword                                                |
 | SMIME_ORG_ID            | The Organization ID to be used for SMIME Certificates                                                | 1234                                                        |
 | SSL_ORG_ID              | The Organization ID to be used for SSL Certificates                                                  | 1234                                                        |
+| SSL_TERM                | The requested validity of the SSL certificate.                                                       | 365                                                         |
+| SSL_PROFILE             | The requested profile of the SSL certificate                                                         | 15863                                                       |
+| SMIME_TERM              | The requested validity of the SMIME certificate.                                                     | 1095                                                        |
+| SMIME_STUDENT_TERM      | The requested validity of the SMIME certificate for students.                                        | 365                                                         |
+| SMIME_PROFILE           | The requested profile of the SMIME certificate.                                                      | 16307                                                       |
+| SMIME_KEYLENGTH         | The requested keylength of the SMIME certificate.                                                    | 3072                                                        |
+| SMIME_KEYTYPE           | The requested key type of the SMIME certificate. (Currently only RSA is supported and recommended)   | RSA                                                         |
 | JWKS_URI                | The URI to your JSONWebKeySet to validate the OIDC/OAuth2 Authentication                             | `https://your.idp.university.local/idp/profile/oidc/keyset` |
 | AUDIENCE                | The used adiennce for OAuth2 (must be the same value as `AUTH_RESOURCE`)                             | `https://api.university.local`                              |
 | NEXTAUTH_URL            | The canonical URL of your site                                                                       | `https://pki.example.edu`                                   |
@@ -31,3 +40,17 @@ This repository provides the required tools for a local docker deployment of the
 | AUTH_RESOURCE           | The requested OIDC resource to get OAuth2 working.                                                   | `https://api.university.local`                              |
 | AUTH_SECRET             | The [Next.JS Auth Secret](https://next-auth.js.org/configuration/options#secret) used to encrypt JWT | `Random String                                              |
 | NEXTAUTH_URL            | The canonical URL of your site (Should be the same as during build time)                             | `https://pki.example.edu`                                   |
+
+## Getting Started
+
+After setting all required values you can build the docker containers. 
+
+```
+docker compose build
+```
+
+Afterwards you should be able to start the deployment
+
+```
+docker compose up -d
+```
