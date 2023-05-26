@@ -148,6 +148,13 @@ services:
     build:
       context: portal-frontend
       dockerfile: Dockerfile
+      args:
+        NEXTAUTH_URL: ${NEXTAUTH_URL}
+        NEXT_PUBLIC_AUTH_IDP: ${NEXT_PUBLIC_AUTH_IDP}
+        NEXT_PUBLIC_EAB_HOST: ${NEXT_PUBLIC_EAB_HOST}
+        NEXT_PUBLIC_PKI_HOST: ${NEXT_PUBLIC_PKI_HOST}
+        NEXT_PUBLIC_DOMAIN_HOST: ${NEXT_PUBLIC_DOMAIN_HOST}
+        NEXT_PUBLIC_SENTRY_DSN: ${NEXT_PUBLIC_SENTRY_DSN}
     restart: always
     env_file:
       - .env
