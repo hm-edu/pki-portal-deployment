@@ -24,8 +24,8 @@ Before building and starting the containers serveral environment variables shoul
 | SMIME_TERM              | The requested validity of the SMIME certificate.                                                     | 1095                                                        |
 | SMIME_STUDENT_TERM      | The requested validity of the SMIME certificate for students.                                        | 365                                                         |
 | SMIME_PROFILE           | The requested profile of the SMIME certificate.                                                      | 16307                                                       |
-| SMIME_KEYLENGTH         | The requested keylength of the SMIME certificate.                                                    | 3072                                                        |
-| SMIME_KEYTYPE           | The requested key type of the SMIME certificate. (Currently only RSA is supported and recommended)   | RSA                                                         |
+| SMIME_KEY_LENGTH         | The requested keylength of the SMIME certificate.                                                    | 3072                                                        |
+| SMIME_KEY_TYPE           | The requested key type of the SMIME certificate. (Currently only RSA is supported and recommended)   | RSA                                                         |
 | JWKS_URI                | The URI to your JSONWebKeySet to validate the OIDC/OAuth2 Authentication                             | `https://your.idp.university.local/idp/profile/oidc/keyset` |
 | AUDIENCE                | The used adiennce for OAuth2 (must be the same value as `AUTH_RESOURCE`)                             | `https://api.university.local`                              |
 | NEXTAUTH_URL            | The canonical URL of your site                                                                       | `https://pki.example.edu`                                   |

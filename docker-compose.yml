@@ -83,7 +83,7 @@ services:
       - --smime_key_length
       - "$SMIME_KEY_LENGTH"
       - --smime_key_type
-      - "RSA"
+      - "$SMIME_KEY_TYPE"
       - --db
       - "postgresql://pki:pki@postgres/certificates"
   eab-rest-interface:
@@ -174,11 +174,9 @@ services:
 volumes:
   caddy_config:
   caddy_data:
-    external: true
   postgresql:
 networks:
   default:
-    name: default
   portal-frontend:
     name: portal-frontend
   portal-backend:
