@@ -15,6 +15,34 @@ This repository provides the required tools for a local docker deployment of the
   - ACME
 
 
+## Shibboleth IDP Configuration
+
+Setting up and configuring an shibboleth IDP to provide an working OIDC endpoint can be pretty cumberstone.
+
+```.json
+{
+  "scope":"openid profile email offline_access Certificates Domains EAB",
+  "redirect_uris":["https://pki.example.edu/api/auth/callback/oidc"],
+  "client_id":"pki.example.edu"
+  "subject_type":"pairwise",
+  "client_secret":"XXXXXXXXXXXXX",
+  "response_types": [
+    "code"
+  ],
+  "grant_types": [
+    "authorization_code",
+    "refresh_token"
+  ],
+  "audience": [
+    "https://api.example.edu"
+  ]
+}, {
+  "client_id":"https://api.example.edu"
+}
+
+```
+
+
 ## Configuration
 
 Before building and starting the containers serveral environment variables should be configured. Therefor you should copy the `.env.example` file to `.env` and set the appropriate values.
@@ -32,8 +60,8 @@ Before building and starting the containers serveral environment variables shoul
 | SMIME_PROFILE           | The requested profile of the SMIME certificate.                                                      | 16307                                                       |
 | SMIME_KEY_LENGTH         | The requested keylength of the SMIME certificate.                                                    | 3072                                                        |
 | SMIME_KEY_TYPE           | The requested key type of the SMIME certificate. (Currently only RSA is supported and recommended)   | RSA                                                         |
-| JWKS_URI                | The URI to your JSON Web Key Set to validate the OIDC/OAuth2 Authentication                             | `https://your.idp.university.local/idp/profile/oidc/keyset` |
-| AUDIENCE                | The used adiennce for OAuth2 (must be the same value as `AUTH_RESOURCE`)                             | `https://api.university.local`                              |
+| JWKS_URI                | The URI to your JSON Web Key Set to validate the OIDC/OAuth2 Authentication                             | `https://your.idp.example.edu/idp/profile/oidc/keyset` |
+| AUDIENCE                | The used adiennce for OAuth2 (must be the same value as `AUTH_RESOURCE`)                             | `https://api.example.edu`                              |
 | NEXTAUTH_URL            | The canonical URL of your site                                                                       | `https://pki.example.edu`                                   |
 | NEXT_PUBLIC_AUTH_IDP    | The IDP that shal be used for OIDC authentication                                                    | `https://sso.example.edu`                                   |
 | NEXT_PUBLIC_EAB_HOST    | The API Backend host for EAB Operations                                                              | `https://eab.api.example.edu`                               |
@@ -43,7 +71,7 @@ Before building and starting the containers serveral environment variables shoul
 | AUTH_CLIENT_ID          | The OIDC Client ID                                                                                   | `pki`                                                       |
 | AUTH_CLIENT_SECRET      | The OIDC Client Secret                                                                               | `Random String`                                             |
 | AUTH_IDP                | The IDP that shal be used for OIDC authentication (Should be the same as during build time)          | `https://sso.example.edu`                                   |
-| AUTH_RESOURCE           | The requested OIDC resource to get OAuth2 working.                                                   | `https://api.university.local`                              |
+| AUTH_RESOURCE           | The requested OIDC resource to get OAuth2 working.                                                   | `https://api.example.edu`                              |
 | AUTH_SECRET             | The [Next.JS Auth Secret](https://next-auth.js.org/configuration/options#secret) used to encrypt JWT | `Random String                                              |
 | NEXTAUTH_URL            | The canonical URL of your site (Should be the same as during build time)                             | `https://pki.example.edu`                                   |
 
