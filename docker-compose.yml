@@ -144,6 +144,10 @@ services:
       - "pki-service:8081"
       - --grpc-port
       - "8081"
+      - --preseed 
+      - "/data/preseed.json"
+    volumes:
+      - ./db-init/preseed.json:/data/preseed.json
   frontend:
     build:
       context: portal-frontend
@@ -160,6 +164,19 @@ services:
       - .env
     networks:
       - portal-frontend
+  acme:
+    image: ghcr.io/hm-edu/certificates:master
+    restart: always
+    networks:
+      - portal-backend
+    depends_on:
+      - postgresql
+      - eab-rest-interface
+      - pki-service
+    volumes:
+      - ./acme:/home/step
+      - step:/opt/step
+    command: /usr/local/bin/step-ca
   caddy:
     image: caddy
     restart: always
@@ -182,6 +199,7 @@ volumes:
   caddy_config:
   caddy_data:
   postgresql:
+  step:
 networks:
   default:
   portal-frontend:
