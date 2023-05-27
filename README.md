@@ -50,7 +50,7 @@ Before building and starting the containers serveral environment variables shoul
 | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
 | SECTIGO_USER            | Your Sectigo Username                                                                                                           | youruser                                               |
 | SECTIGO_PASSWORD        | Your Sectigo Password                                                                                                           | yourpassword                                           |
-| SMIME_ORG_ID            | The Organization ID to be used for SMIME  Certificates  (can be found in the Sectigo Certificate Manager -> Organization -> ID) | 1234                                                   |
+| SMIME_ORG_ID            | The Organization ID to be used for SMIME Certificates (can be found in the Sectigo Certificate Manager -> Organization -> ID) | 1234                                                   |
 | SSL_ORG_ID              | The Organization ID to be used for SSL Certificates (normaly the same as for SMIME)                                             | 1234                                                   |
 | SSL_TERM                | The requested validity of the SSL certificate.                                                                                  | 365                                                    |
 | SSL_PROFILE             | The requested profile of the SSL certificate                                                                                    | 15863                                                  |
@@ -72,7 +72,6 @@ Before building and starting the containers serveral environment variables shoul
 | AUTH_IDP                | The IDP that shal be used for OIDC authentication (Should be the same as during build time)                                     | `https://sso.example.edu`                              |
 | AUTH_RESOURCE           | The requested OIDC resource to get OAuth2 working.                                                                              | `https://api.example.edu`                              |
 | AUTH_SECRET             | The [Next.JS Auth Secret](https://next-auth.js.org/configuration/options#secret) used to encrypt JWT                            | `Random String`                                         |
-| NEXTAUTH_URL            | The canonical URL of your site (Should be the same as during build time)                                                        | `https://pki.example.edu`                              |
 
 ## Getting Started
 
