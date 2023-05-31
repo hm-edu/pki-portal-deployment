@@ -153,7 +153,11 @@ services:
       context: portal-frontend
       dockerfile: Dockerfile
       args:
+        LOGO_LARGE: ${LOGO_LARGE}
+        LOGO_SMALL: ${LOGO_SMALL}    
+        FAVICON: ${FAVICON}         
         NEXTAUTH_URL: ${NEXTAUTH_URL}
+        NEXT_PUBLIC_ORANIZATION_NAME: ${NEXT_PUBLIC_ORANIZATION_NAME}
         NEXT_PUBLIC_AUTH_IDP: ${NEXT_PUBLIC_AUTH_IDP}
         NEXT_PUBLIC_EAB_HOST: ${NEXT_PUBLIC_EAB_HOST}
         NEXT_PUBLIC_PKI_HOST: ${NEXT_PUBLIC_PKI_HOST}
