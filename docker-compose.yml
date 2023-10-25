@@ -16,6 +16,7 @@ services:
       - "5432:5432"
     networks:
       - portal-backend
+
   pki-rest-interface:
     build:
       context: portal-backend
@@ -46,6 +47,7 @@ services:
       - "domain-rest-interface:8081"
       - --cors_allowed_origins
       - "$NEXTAUTH_URL"
+
   pki-service:
     build:
       context: portal-backend
@@ -88,6 +90,7 @@ services:
       - "$SMIME_KEY_TYPE"
       - --db
       - "postgresql://pki:pki@postgres/certificates"
+
   eab-rest-interface:
     build:
       context: portal-backend
@@ -120,6 +123,7 @@ services:
       - "domain-rest-interface:8081"
       - --cors_allowed_origins
       - "$NEXTAUTH_URL"
+
   domain-rest-interface:
     build:
       context: portal-backend
@@ -152,8 +156,11 @@ services:
       - "/data/preseed.json"
       - --cors_allowed_origins
       - "$NEXTAUTH_URL"
+      - --admins
+      - "$DOMAIN_ADMINS"
     volumes:
       - ./db-init/preseed.json:/data/preseed.json
+
   frontend:
     build:
       context: portal-frontend
@@ -170,11 +177,13 @@ services:
         NEXT_PUBLIC_DOMAIN_HOST: ${NEXT_PUBLIC_DOMAIN_HOST}
         NEXT_PUBLIC_ACME_HOST: ${NEXT_PUBLIC_ACME_HOST}
         NEXT_PUBLIC_SENTRY_DSN: ${NEXT_PUBLIC_SENTRY_DSN}
+        NEXT_PUBLIC_DISABLE_CSP: ${NEXT_PUBLIC_DISABLE_CSP}
     restart: always
     env_file:
       - .env
     networks:
       - portal-frontend
+
   acme:
     image: ghcr.io/hm-edu/certificates:master
     restart: always
@@ -189,6 +198,7 @@ services:
     environment:
       - STEP_TLS_INSECURE=1
     command: /usr/local/bin/step-ca
+
   caddy:
     image: caddy
     restart: always
@@ -201,7 +211,6 @@ services:
       - "80:80"
       - "443:443"
       - "443:443/udp"
-    
     volumes:
       - ./caddy/Caddyfile:/etc/caddy/Caddyfile
       - caddy_data:/data
