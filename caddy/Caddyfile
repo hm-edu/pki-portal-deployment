@@ -10,6 +10,10 @@
     reverse_proxy domain-rest-interface:8000
 }
 
+{$NEXT_PUBLIC_ACME_HOST} {
+    reverse_proxy acme:443
+}
+
 {$NEXTAUTH_URL} {
     reverse_proxy frontend:3000
 }

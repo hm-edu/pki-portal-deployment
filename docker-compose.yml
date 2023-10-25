@@ -44,6 +44,8 @@ services:
       - "pki-service:8081"
       - --domain_service
       - "domain-rest-interface:8081"
+      - --cors_allowed_origins
+      - "$NEXTAUTH_URL"
   pki-service:
     build:
       context: portal-backend
@@ -116,6 +118,8 @@ services:
       - "acme/acme"
       - --domain_service
       - "domain-rest-interface:8081"
+      - --cors_allowed_origins
+      - "$NEXTAUTH_URL"
   domain-rest-interface:
     build:
       context: portal-backend
@@ -146,6 +150,8 @@ services:
       - "8081"
       - --preseed 
       - "/data/preseed.json"
+      - --cors_allowed_origins
+      - "$NEXTAUTH_URL"
     volumes:
       - ./db-init/preseed.json:/data/preseed.json
   frontend:
@@ -180,7 +186,8 @@ services:
       - pki-service
     volumes:
       - ./acme:/home/step
-      - step:/opt/step
+    environment:
+      - STEP_TLS_INSECURE=1
     command: /usr/local/bin/step-ca
   caddy:
     image: caddy
@@ -204,7 +211,6 @@ volumes:
   caddy_config:
   caddy_data:
   postgresql:
-  step:
 networks:
   default:
   portal-frontend:
