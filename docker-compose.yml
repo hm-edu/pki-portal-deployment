@@ -178,6 +178,7 @@ services:
         NEXT_PUBLIC_ACME_HOST: ${NEXT_PUBLIC_ACME_HOST}
         NEXT_PUBLIC_SENTRY_DSN: ${NEXT_PUBLIC_SENTRY_DSN}
         NEXT_PUBLIC_DISABLE_CSP: ${NEXT_PUBLIC_DISABLE_CSP}
+        NEXT_PUBLIC_DOCS_URL: ${NEXT_PUBLIC_DOCS_URL}
     restart: always
     env_file:
       - .env
