@@ -1,0 +1,24 @@
+{$NEXT_PUBLIC_EAB_HOST} {
+    tls /etc/caddy/cert.pem /etc/caddy/key.pem
+    reverse_proxy eab-rest-interface:8000
+}
+
+{$NEXT_PUBLIC_PKI_HOST} {
+    tls /etc/caddy/cert.pem /etc/caddy/key.pem
+    reverse_proxy pki-rest-interface:8000
+}
+
+{$NEXT_PUBLIC_DOMAIN_HOST} {
+    tls /etc/caddy/cert.pem /etc/caddy/key.pem
+    reverse_proxy domain-rest-interface:8000
+}
+
+{$NEXT_PUBLIC_ACME_HOST} {
+    tls /etc/caddy/cert.pem /etc/caddy/key.pem
+    reverse_proxy acme:443
+}
+
+{$NEXTAUTH_URL} {
+    tls /etc/caddy/cert.pem /etc/caddy/key.pem
+    reverse_proxy frontend:3000
+}

@@ -1,0 +1,20 @@
+version: "3"
+services:
+  caddy:
+    image: caddy
+    restart: always
+    networks:
+      - default 
+      - portal-frontend
+    env_file:
+      - .env
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"    
+    volumes:
+      - ./caddy/Caddyfile-cert:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+      - ./caddy/cert.pem:/etc/caddy/cert.pem
+      - ./caddy/key.pem:/etc/caddy/key.pem
