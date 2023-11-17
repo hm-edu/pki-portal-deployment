@@ -189,6 +189,7 @@ services:
     image: ghcr.io/hm-edu/certificates:master
     restart: always
     networks:
+      - portal-frontend
       - portal-backend
     depends_on:
       - postgresql
