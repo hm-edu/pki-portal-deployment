@@ -61,7 +61,7 @@ services:
       - portal-backend
     env_file:
       - .env
-    command:     
+    command:
       - --level
       - "info"
       - --sectigo_user
@@ -139,7 +139,7 @@ services:
       - pki-service
     env_file:
       - .env
-    command:        
+    command:
       - --level
       - "info"
       - --audience
@@ -152,7 +152,7 @@ services:
       - "pki-service:8081"
       - --grpc-port
       - "8081"
-      - --preseed 
+      - --preseed
       - "/data/preseed.json"
       - --cors_allowed_origins
       - "$NEXTAUTH_URL"
@@ -167,8 +167,8 @@ services:
       dockerfile: Dockerfile
       args:
         LOGO_LARGE: ${LOGO_LARGE}
-        LOGO_SMALL: ${LOGO_SMALL}    
-        FAVICON: ${FAVICON}         
+        LOGO_SMALL: ${LOGO_SMALL}
+        FAVICON: ${FAVICON}
         NEXTAUTH_URL: ${NEXTAUTH_URL}
         NEXT_PUBLIC_ORGANIZATION_NAME: ${NEXT_PUBLIC_ORGANIZATION_NAME}
         NEXT_PUBLIC_AUTH_IDP: ${NEXT_PUBLIC_AUTH_IDP}
@@ -179,6 +179,11 @@ services:
         NEXT_PUBLIC_SENTRY_DSN: ${NEXT_PUBLIC_SENTRY_DSN}
         NEXT_PUBLIC_DISABLE_CSP: ${NEXT_PUBLIC_DISABLE_CSP}
         NEXT_PUBLIC_DOCS_URL: ${NEXT_PUBLIC_DOCS_URL}
+        NEXT_PUBLIC_REFETCH_IN_BACKGROUND: ${NEXT_PUBLIC_REFETCH_IN_BACKGROUND}
+        NEXT_PUBLIC_DISABLE_DOMAIN: ${NEXT_PUBLIC_DISABLE_DOMAIN}
+        NEXT_PUBLIC_DISABLE_SERVER: ${NEXT_PUBLIC_DISABLE_SERVER}
+        NEXT_PUBLIC_DISABLE_USER: ${NEXT_PUBLIC_DISABLE_USER}
+        NEXT_PUBLIC_DISABLE_ACME: ${NEXT_PUBLIC_DISABLE_ACME}
     restart: always
     env_file:
       - .env
@@ -205,7 +210,7 @@ services:
     image: caddy
     restart: always
     networks:
-      - default 
+      - default
       - portal-frontend
     env_file:
       - .env
