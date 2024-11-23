@@ -18,6 +18,9 @@ This repository provides the required tools for a local docker deployment of the
 
 Setting up and configuring an shibboleth IDP to provide an working OIDC endpoint can be pretty cumberstone.
 
+The following configuration must be adapted for the own domains but provides a basic setup. The second client allows the use of OAuth2 beside OIDC. This results in 'readable' JWT for the frontend and the backend.
+
+
 ```.json
 {
   "scope":"openid profile email offline_access Certificates Domains EAB",
@@ -40,6 +43,11 @@ Setting up and configuring an shibboleth IDP to provide an working OIDC endpoint
 }
 
 ```
+
+Please ensure that the following points are also configured: 
+
+- Active `OAUTH2.TokenAudience` profile in the relying-party.xml
+- The Client Secret is passed as HTTP-Header and thus should contain any strange special characters. We recommend a long alpha-numeric string
 
 
 ## Configuration
