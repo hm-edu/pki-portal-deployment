@@ -4,8 +4,9 @@ This repository provides the required tools for a local docker deployment of the
 
 ## Requirements
 
-- Valid Sectigo Account
-- Enabled API in Sectigo Cert-Manager
+- Two valid HARICA Accounts
+  - One for certificate requests
+  - One for automated request validations (Needs at least the permission to approve SSL Requests)
 - Installed Docker 
 - OIDC at your IDP or any other OIDC provider
 - Overall 5 FQDNs
@@ -19,7 +20,6 @@ This repository provides the required tools for a local docker deployment of the
 Setting up and configuring an shibboleth IDP to provide an working OIDC endpoint can be pretty cumberstone.
 
 The following configuration must be adapted for the own domains but provides a basic setup. The second client allows the use of OAuth2 beside OIDC. This results in 'readable' JWT for the frontend and the backend.
-
 
 ```.json
 {
@@ -56,17 +56,13 @@ Before building and starting the containers serveral environment variables shoul
 
 | Variable                | Description                                                                                                                   | Example Value                                          |
 | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
-| SECTIGO_USER            | Your Sectigo Username                                                                                                         | youruser                                               |
-| SECTIGO_PASSWORD        | Your Sectigo Password                                                                                                         | yourpassword                                           |
-| SMIME_ORG_ID            | The Organization ID to be used for SMIME Certificates (can be found in the Sectigo Certificate Manager -> Organization -> ID) | 1234                                                   |
-| SSL_ORG_ID              | The Organization ID to be used for SSL Certificates (normaly the same as for SMIME)                                           | 1234                                                   |
-| SSL_TERM                | The requested validity of the SSL certificate.                                                                                | 365                                                    |
-| SSL_PROFILE             | The requested profile of the SSL certificate                                                                                  | 15863                                                  |
-| SMIME_TERM              | The requested validity of the SMIME certificate.                                                                              | 1095                                                   |
-| SMIME_STUDENT_TERM      | The requested validity of the SMIME certificate for students.                                                                 | 365                                                    |
-| SMIME_PROFILE           | The requested profile of the SMIME certificate.                                                                               | 16307                                                  |
+| USER                    | Your HARICA Username for certificate requests                                                                                 | youruser                                               |
+| PASSWORD                | Your HARICA Password for certificate requests                                                                                 | yourpassword                                           |
+| TOTP_SEED               | Your HARICA TOTP Seed for certificate requests                                                                                | totpseed                                               |
+| VALIDATION_USER         | Your HARICA Username for certificate request validations                                                                      | youruser                                               |
+| VALIDATION_PASSWORD     | Your HARICA Password for certificate request validations                                                                      | yourpassword                                           |
+| VALIDATION_TOTP_SEED    | Your HARICA TOTP Seed for certificate request validations                                                                     | totpseed                                               |
 | SMIME_KEY_LENGTH        | The requested keylength of the SMIME certificate.                                                                             | 3072                                                   |
-| SMIME_KEY_TYPE          | The requested key type of the SMIME certificate. (Currently only RSA is supported and recommended)                            | RSA                                                    |
 | JWKS_URI                | The URI to your JSON Web Key Set to validate the OIDC/OAuth2 Authentication                                                   | `https://your.idp.example.edu/idp/profile/oidc/keyset` |
 | AUDIENCE                | The used adiennce for OAuth2 (must be the same value as `AUTH_RESOURCE`)                                                      | `https://api.example.edu`                              |
 | NEXTAUTH_URL            | The canonical URL of your site                                                                                                | `https://pki.example.edu`                              |

@@ -64,30 +64,20 @@ services:
     command:
       - --level
       - "info"
-      - --sectigo_user
-      - "$SECTIGO_USER"
-      - --sectigo_customeruri
-      - "DFN"
-      - --sectigo_password
-      - "$SECTIGO_PASSWORD"
-      - --ssl_org_id
-      - "$SSL_ORG_ID"
-      - --ssl_term
-      - "$SSL_TERM"
-      - --ssl_profile
-      - "$SSL_PROFILE"
-      - --smime_profile
-      - "$SMIME_PROFILE"
-      - --smime_org_id
-      - "$SMIME_ORG_ID"
-      - --smime_term
-      - "$SMIME_TERM"
-      - --smime_student_term
-      - "$SMIME_STUDENT_TERM"
       - --smime_key_length
       - "$SMIME_KEY_LENGTH"
-      - --smime_key_type
-      - "$SMIME_KEY_TYPE"
+      - --user
+      - "$USER"
+      - --password
+      - "$PASSWORD"
+      - --totp_seed
+      - "$TOTP_SEED"
+      - --validation_user
+      - "$VALIDATION_USER"
+      - --validation_password
+      - "$VALIDATION_PASSWORD"
+      - --validation_totp_seed
+      - "$VALIDATION_TOTP_SEED"
       - --db
       - "postgresql://pki:pki@postgres/certificates"
 
