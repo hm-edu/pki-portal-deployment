@@ -67,11 +67,11 @@ services:
       - --smime_key_length
       - "$SMIME_KEY_LENGTH"
       - --user
-      - "$USER"
+      - "$REQUEST_USER"
       - --password
-      - "$PASSWORD"
+      - "$REQUEST_PASSWORD"
       - --totp_seed
-      - "$TOTP_SEED"
+      - "$REQUEST_TOTP_SEED"
       - --validation_user
       - "$VALIDATION_USER"
       - --validation_password
