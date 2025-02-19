@@ -25,7 +25,7 @@ The following configuration must be adapted for the own domains but provides a b
 {
   "scope":"openid profile email offline_access Certificates Domains EAB",
   "redirect_uris":["https://pki.example.edu/api/auth/callback/oidc"],
-  "client_id":"pki.example.edu"
+  "client_id":"pki.example.edu",
   "subject_type":"pairwise",
   "client_secret":"XXXXXXXXXXXXX",
   "response_types": [
@@ -46,7 +46,8 @@ The following configuration must be adapted for the own domains but provides a b
 
 Please ensure that the following points are also configured: 
 
-- Active `OAUTH2.TokenAudience` profile in the relying-party.xml
+- Active `OAUTH2.TokenAudience`, `OAUTH2.Token` profile in the `relying-party.xml`
+- use `idp.oauth2.accessToken.type = JWT` in the `oidc.properties`
 - The Client Secret is passed as HTTP-Header and thus should contain any strange special characters. We recommend a long alpha-numeric string
 
 
